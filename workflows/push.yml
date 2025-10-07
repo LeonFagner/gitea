@@ -1,0 +1,19 @@
+# .gitea/workflows/push.yml
+name: Update Node Server
+
+on:
+  push:
+    branches:
+      - main  # ou a branch que você usa
+
+jobs:
+  update:
+    runs-on: [linux, docker]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Pull latest code
+        run: |
+          cd /app  # se estiver rodando dentro do container Node
+          git pull origin main
+          npm install
+          npm run build
